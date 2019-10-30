@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp"
+        android:textAlignment="center"
+        android:inputType="number"
+        android:maxLength="12"
+        android:hint="@string/type_cv"/>
+
+    <EditText
+        android:id="@+id/et_aut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp"
+        android:maxLength="6"
+        android:hint="@string/type_authorization_code"
+        android:inputType="number"
+        android:textAlignment="center"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroupCancel"
+        android:layout_width="@dimen/radiogroup_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/radiogroup_margin_start"
+        android:layout_marginTop="@dimen/radiogroup_margin_top"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/cancelRadioButton_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="@bool/checked_radio_button"
+            android:layout_margin="1dp"
+            android:text="@string/credit" />
+
+        <RadioButton
+            android:id="@+id/cancelRadioButton_debit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/debit" />
+
+        <RadioButton
+            android:id="@+id/cancelRadioButton_voucher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/voucher" />
+
+    </RadioGroup>
+
+</LinearLayout>

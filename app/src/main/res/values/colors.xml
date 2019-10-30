@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="turquoise_blue">#00b4c5</color>
+    <color name="turquoise_blue_dark">#178c9b</color>
+
+
+    <color name="black">#000000</color>
+    <color name="last_transaction">#4d4d4d</color>
+    <color name="value_last_transaction">#8a000000</color>
+    <color name="date_time_last_transaction">#8a000000</color>
+    <color name="name_bluetooth_color">#8A000000</color>
+    <color name="et_value_text_color">#dddbd7</color>
+    <color name="et_value_text_color_hint">#dddbd7</color>
+    <color name="btn_pay_text_color">#ffffff</color>
+    <color name="bg_progressbar">#80000000</color>
+    <color name="transparent_color">#00000000</color>
+    <color name="first_dialog_cancel">#575757</color>
+    <color name="label_status">#4d4d4d</color>
+</resources>

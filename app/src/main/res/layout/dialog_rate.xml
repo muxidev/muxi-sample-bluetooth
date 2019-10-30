@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RadioGroup
+        android:id="@+id/radioGroupRate"
+        android:layout_width="@dimen/radiogroup_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/radiogroup_margin_start"
+        android:layout_marginTop="@dimen/radiogroup_margin_top"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton_loja"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="@bool/checked_radio_button"
+            android:layout_margin="1dp"
+            android:text="Loja" />
+
+        <RadioButton
+            android:id="@+id/radioButton_adm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="Administrativo" />
+
+
+
+    </RadioGroup>
+
+</LinearLayout>

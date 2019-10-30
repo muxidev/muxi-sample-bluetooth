@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Muxi Sample</string>
+
+    <string name="credit">CREDIT</string>
+    <string name="debit">DEBIT</string>
+
+    <string name="empty_value">Payment value cannot be blank</string>
+    <string name="generic_error">Something went wrong!</string>
+
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="no_pinpad_selected">No Pinpad selected</string>
+    <string name="value_default">0.00</string>
+    <string name="text_btn_charge">CHARGE</string>
+    <string name="last_transaction">NO LAST TRANSACTION</string>
+    <string name="btn_cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="navdrawer_start">Start</string>
+    <string name="navdrawer_deconfigure">Deconfigure</string>
+
+    <string name="btn_pay_text">CHARGE</string>
+    <string name="tv_last_transaction_font">sans-serif-medium</string>
+    <string name="value_last_transaction_font">sans-serif</string>
+    <string name="date_time_last_transaction_font">sans-serif</string>
+    <string name="btn_cancel_font">sans-serif-medium</string>
+    <string name="tv_last_transaction">LAST TRANSACTION</string>
+    <string name="tv_no_last_transaction">NO LAST TRANSACTION</string>
+
+
+    <string name="payment_approved">Payment approved</string>
+
+    <string name="content_logo_muxi">Logo muxi</string>
+    <string name="content_header_muxi_logo">Header muxi logo</string>
+
+    <string name="hint_transaction_value">Transaction value</string>
+    <string name="deconfig_success">Deconfigure successfully!</string>
+    <string name="deconfig_error">Deconfigure fail!</string>
+    <string name="initialize_success">Initialization successfully!</string>
+    <string name="service_not_initialized">Service not initialized</string>
+    <string name="initialize_error">Initialization error</string>
+    <string name="cancel_approved">Cancel approved</string>
+    <string name="cancel_error">Cancel error</string>
+    <string name="cancel_void">No last transaction</string>
+    <string name="loading_initialize">Loading…</string>
+    <string name="waiting_pinpad">Waiting pinpad…</string>
+    <string name="client_receipt">Client receipt</string>
+    <string name="dialog_ok">OK</string>
+    <string name="title_receipt">Receipt</string>
+    <string name="prefix_currency">$</string>
+    <string name="initialization_label">Initialized</string>
+    <string name="selected_label">Selected</string>
+    <string name="label_status">Status</string>
+    <string name="voucher" translatable="false">VOUCHER</string>
+    <string name="navdrawer_setEstablishment">Set CNPJ</string>
+    <string name="modify">Modify</string>
+    <string name="changed_cnpj">CNPJ changed!</string>
+    <string name="type_cnpj">Type CNPJ</string>
+    <string name="navdrawer_cancelTransaction">Cancel specific transaction</string>
+    <string name="type_cv">Type CV</string>
+    <string name="type_value">Type value</string>
+    <string name="type_authorization_code">Type authorization code</string>
+    <string name="back">Back</string>
+    <string name="title_rate_dialog">Select rate</string>
+    <string name="text_positive_button" translatable="false">Ok</string>
+    <string name="title_installments_dialog">Select number of installments</string>
+    <string name="empty_cv">CV cannot be blank</string>
+    <string name="empty_aut">Authorization code cannot be blank</string>
+    <string name="dialog_see_client_receipt">Ver via do cliente</string>
+    <string name="send_email">Send email</string>
+    <string name="establishment_receipt">Establishment receipt</string>
+    <string name="title_vista_install">Choose payment type</string>
+    <string name="email_type" translatable="false">message/rfc822</string>
+    <string name="cash_payment">Cash payment</string>
+    <string name="installment">Installment payment</string>
+    <string name="btn_reprint">Reprint</string>
+    <string name="empty_receipt">There\'s no receipt to show</string>
+    <integer name="max_length_input">13</integer>
+    <bool name="checked_radio_button">true</bool>
+</resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+
+
+
+    <dimen name="text_dialog_margin_bottom">20dp</dimen>
+    <dimen name="frag_padding_horizontal">24dp</dimen>
+
+    <dimen name="bt_dialog_padding_top">24dp</dimen>
+    <dimen name="bt_dialog_padding_bottom">8dp</dimen>
+    <dimen name="button_bt_dialog_height">52dp</dimen>
+
+
+    <dimen name="button_dialog_margin">8dp</dimen>
+    <dimen name="button_dialog_padding">8dp</dimen>
+
+
+    <dimen name="cv_bluetooth_margin_start">8dp</dimen>
+    <dimen name="cv_bluetooth_margin_top">8dp</dimen>
+    <dimen name="cv_bluetooth_margin_end">8dp</dimen>
+    <dimen name="cv_bluetooth_margin_bottom">8dp</dimen>
+
+    <dimen name="design_navigation_icon_size" tools:override="true">16dp</dimen>
+    <dimen name="design_navigation_icon_padding" tools:override="true">10dp</dimen>
+    <dimen name="elevation_toolbar">4dp</dimen>
+    <dimen name="text_size_btdevice">14sp</dimen>
+    <dimen name="cv_bluetooth_width">0dp</dimen>
+    <dimen name="cv_bluetooth_height">80dp</dimen>
+    <dimen name="ll_pp_width">269dp</dimen>
+    <dimen name="ll_pp_margin_start">16dp</dimen>
+    <dimen name="ll_pp_margin_end">21dp</dimen>
+    <dimen name="iv_pinpad_margin_top">20dp</dimen>
+    <dimen name="iv_pinpad_margin_end">36dp</dimen>
+    <dimen name="iv_pinpad_margin_bottom">20dp</dimen>
+    <dimen name="cv_pay_width">0dp</dimen>
+    <dimen name="cv_pay_height">240dp</dimen>
+    <dimen name="cv_pay_margin_start">8dp</dimen>
+    <dimen name="cv_pay_margin_top">8dp</dimen>
+    <dimen name="cv_pay_margin_end">8dp</dimen>
+    <dimen name="cv_pay_margin_bottom">8dp</dimen>
+    <dimen name="et_value_width">210dp</dimen>
+    <dimen name="et_value_margin_start">80dp</dimen>
+    <dimen name="et_value_margin_top">16dp</dimen>
+    <dimen name="et_value_margin_end">80dp</dimen>
+    <dimen name="et_value_text_size">34sp</dimen>
+    <dimen name="radiogroup_width">285dp</dimen>
+    <dimen name="radiogroup_margin_start">8dp</dimen>
+    <dimen name="radiogroup_margin_top">28dp</dimen>
+    <dimen name="radiobtn_credit_margin_end">60dp</dimen>
+    <dimen name="btn_pay_margin_top">8dp</dimen>
+    <dimen name="btn_pay_margin_bottom">24dp</dimen>
+    <dimen name="btn_pay_linespacingextra">4sp</dimen>
+    <dimen name="btn_pay_text_size">14sp</dimen>
+    <dimen name="progress_bar_width">85dp</dimen>
+    <dimen name="progress_bar_height">89dp</dimen>
+    <dimen name="progress_bar_margin_start">8dp</dimen>
+    <dimen name="progress_bar_margin_top">8dp</dimen>
+    <dimen name="progress_bar_margin_end">8dp</dimen>
+    <dimen name="progress_bar_margin_bottom">8dp</dimen>
+    <dimen name="cv_cancel_height">120dp</dimen>
+    <dimen name="cv_cance_margin_start">8dp</dimen>
+    <dimen name="cv_cancel_margin_top">8dp</dimen>
+    <dimen name="cv_cancel_margin_end">8dp</dimen>
+    <dimen name="cv_cancel_margin_bottom">8dp</dimen>
+    <dimen name="tv_last_transaction_margin_start">16dp</dimen>
+    <dimen name="tv_last_transaction_margin_bottom">65dp</dimen>
+    <dimen name="tv_last_transaction_margin_top">16dp</dimen>
+    <dimen name="tv_last_transaction_text_size">14sp</dimen>
+    <dimen name="tv_last_linespacingextra">3sp</dimen>
+    <dimen name="value_last_transaction_text_size">20sp</dimen>
+    <dimen name="value_last_transaction_margin_start">16dp</dimen>
+    <dimen name="value_last_transaction_margin_top">50dp</dimen>
+    <dimen name="value_last_transaction_linespacingextra">9sp</dimen>
+    <dimen name="date_time_last_transaction_margin_start">16dp</dimen>
+    <dimen name="date_time_last_transaction_margin_top">80sp</dimen>
+    <dimen name="date_time_last_transaction_text_size">14sp</dimen>
+    <dimen name="date_time_last_transaction_linespacingextra">6sp</dimen>
+    <dimen name="btn_cancel_margin_start">225dp</dimen>
+    <dimen name="btn_cancel_margin_top">50dp</dimen>
+    <dimen name="btn_cancel_text_size">14sp</dimen>
+    <dimen name="iv_logo_height">35dp</dimen>
+    <dimen name="nav_view_width">160dp</dimen>
+    <dimen name="iv_header_width">55dp</dimen>
+    <dimen name="iv_header_height">40dp</dimen>
+    <dimen name="iv_header_margin_start">53dp</dimen>
+    <dimen name="iv_header_margin_top">21dp</dimen>
+    <dimen name="iv_header_margin_bottom">19dp</dimen>
+    <dimen name="iv_header_margin_end">52dp</dimen>
+    <dimen name="ll_nodevice_padding">10dp</dimen>
+    <dimen name="iv_no_device_width">40dp</dimen>
+    <dimen name="iv_no_device_height">40dp</dimen>
+    <dimen name="fl_bluetooth_height">42dp</dimen>
+    <dimen name="fl_bluetooth_padding_left">24dp</dimen>
+    <dimen name="fl_bluetooth_padding_right">24dp</dimen>
+    <dimen name="fl_bluetooth_padding_top">8dp</dimen>
+    <dimen name="fl_bluetooth_padding_bottom">8dp</dimen>
+    <dimen name="iv_bluetooth_width">20dp</dimen>
+    <dimen name="iv_bluetooth_height">20dp</dimen>
+    <dimen name="tv_devicename_margin_left">28dp</dimen>
+    <dimen name="frag_margin_bottom">15dp</dimen>
+    <dimen name="ll_scan_header_margin_top">10dp</dimen>
+    <dimen name="view_scan_header_height">1dp</dimen>
+    <dimen name="view_scan_header_margin_bottom">10dp</dimen>
+    <dimen name="pb_scan_header_width">20dp</dimen>
+    <dimen name="pb_scan_header_height">20dp</dimen>
+    <dimen name="pb_scan_header_margin_left">10dp</dimen>
+    <dimen name="tv_bluetooth_nodevice_margin_top">20dp</dimen>
+    <dimen name="view_pared_header_height">1dp</dimen>
+    <dimen name="view_pared_header_margin_bottom">10dp</dimen>
+    <dimen name="btn_reprint_margin_start">225dp</dimen>
+    <dimen name="btn_reprint_margin_top">2dp</dimen>
+</resources>

@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Muxi Sample</string>
+
+    <string name="credit">CREDITO</string>
+    <string name="debit">DEBITO</string>
+
+    <string name="empty_value">Valor de pagamento não pode ser zero</string>
+    <string name="generic_error">Algo aconteceu errado!</string>
+
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="no_pinpad_selected">Pinpad não selecionado</string>
+    <string name="value_default">0.00</string>
+    <string name="text_btn_charge">PAGAR</string>
+    <string name="last_transaction">SEM ULTIMA TRANSAÇÃO</string>
+    <string name="btn_cancel" tools:ignore="ButtonCase">CANCELAR</string>
+    <string name="navdrawer_start">Inicializar</string>
+    <string name="navdrawer_deconfigure">Desconfigurar</string>
+
+    <string name="btn_pay_text">PAGAR</string>
+    <string name="tv_last_transaction_font">sans-serif-medium</string>
+    <string name="value_last_transaction_font">sans-serif</string>
+    <string name="date_time_last_transaction_font">sans-serif</string>
+    <string name="btn_cancel_font">sans-serif-medium</string>
+    <string name="tv_last_transaction">ULTIMA TRANSAÇÃO</string>
+    <string name="tv_no_last_transaction">SEM ULTIMA TRANSAÇÃO</string>
+
+    <string name="payment_approved">Pagamento aprovado</string>
+
+    <string name="content_logo_muxi">Logo muxi</string>
+    <string name="content_header_muxi_logo">Header muxi logo</string>
+    <string name="hint_transaction_value">Valor da transação</string>
+    <string name="deconfig_success">Desconfiguração feita com sucesso!</string>
+    <string name="deconfig_error">Falha ao desconfigurar!</string>
+    <string name="initialize_success">Inicialização feita com sucesso!</string>
+    <string name="service_not_initialized">Serviço não iniciado</string>
+    <string name="initialize_error">Erro na inicialização</string>
+    <string name="cancel_approved">Cancelamento aprovado</string>
+    <string name="cancel_error">Erro ao cancelar</string>
+    <string name="cancel_void">Sem ultima transação</string>
+    <string name="loading_initialize">Carregando…</string>
+    <string name="waiting_pinpad">Esperando pinpad…</string>
+    <string name="client_receipt">Via do cliente</string>
+    <string name="dialog_ok">OK</string>
+    <string name="title_receipt">Recibo</string>
+    <string name="prefix_currency">R$</string>
+    <string name="initialization_label">Inicializado</string>
+    <string name="selected_label">Selecionado</string>
+    <string name="label_status">Status</string>
+    <string name="navdrawer_setEstablishment">Alterar CNPJ</string>
+    <string name="type_cnpj">Digite o CNPJ</string>
+    <string name="navdrawer_cancelTransaction">Cancelar transação específica</string>
+    <string name="type_cv">Digite o CV</string>
+    <string name="type_value">Digite o valor</string>
+    <string name="type_authorization_code">Digite o código autorizador</string>
+    <string name="modify">Modificar</string>
+    <string name="back">Voltar</string>
+    <string name="title_rate_dialog">Selecione os juros</string>
+    <string name="title_installments_dialog">Selecione o número de parcelas</string>
+    <string name="changed_cnpj">CNPJ alterado!</string>
+    <string name="empty_cv">CV não pode ser vazio</string>
+    <string name="empty_aut">Código autorizador não pode ser vazio</string>
+    <string name="dialog_see_client_receipt">Ver via do cliente</string>
+    <string name="send_email">Enviar email</string>
+    <string name="establishment_receipt">Via do estabelecimento</string>
+    <string name="title_vista_install">Escolha a forma de pagamento</string>
+    <string name="cash_payment">A vista</string>
+    <string name="installment">Parcelado</string>
+    <string name="btn_reprint">Reimprimir</string>
+    <string name="empty_receipt">Não há recibo para ser exibido</string>
+
+</resources>
