@@ -76,4 +76,6 @@
     <string name="empty_receipt">There\'s no receipt to show</string>
     <integer name="max_length_input">13</integer>
     <bool name="checked_radio_button">true</bool>
+    <string name="pref_key" translatable="false">preference</string>
+    <string name="pref_cnpj_key" translatable="false">cnpj</string>
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -42,6 +43,8 @@ public class DialogHelper extends BaseDialog {
 
     private int VISTA = 0;
     private int MINIMUM_INSTALLMENTS = 2;
+
+    private SharedPreferences.Editor editor;
 
     public DialogHelper(Context context, DialogCallback dialogCallback){
         this.context = context;
@@ -326,7 +329,7 @@ public class DialogHelper extends BaseDialog {
         alertDialog.show();
     }
 
-    public void showEstablishmentDialog(){
+    public void showEstablishmentDialog(final SharedPreferences sharedPreferences){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.type_cnpj);
 
@@ -341,6 +344,9 @@ public class DialogHelper extends BaseDialog {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        editor = sharedPreferences.edit();
+                        editor.putString(context.getString(R.string.pref_cnpj_key),input.getText().toString());
+                        editor.apply();
                         dialogCallback.onClickEstablishment(input.getText().toString());
                     }
                 });

@@ -3,6 +3,7 @@ package muxi.sample_bluetooth;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -87,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private MPSResult resultTransact = new MPSResult();
 
     private static String mCurrentSelectedDevice;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private BluetoothList bluetoothList;
 
-    String cnpj = DESENV_CNPJ;
+    private String cnpj = DESENV_CNPJ;
 
     String clientReceipt = "";
     String establishmentReceipt = "";
@@ -113,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
     private void setup() {
         setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
+        cnpj = sharedPreferences.getString(getString(R.string.pref_cnpj_key),DESENV_CNPJ);
         mBluetoothDevice = findViewById(R.id.spinner_pinpad_name);
         ButterKnife.bind(this);
         if (bluetoothList == null){
@@ -144,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
         setupNavMenu();
-        updateCnpj(DESENV_CNPJ);
+        updateCnpj(cnpj);
     }
 
     @Override
@@ -188,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                                 mpsManager.deconfigure(true);
                                 return true;
                             case R.id.action_establishment:
-                                dialogHelper.showEstablishmentDialog();
+                                dialogHelper.showEstablishmentDialog(sharedPreferences);
                                 return true;
                             case R.id.action_cancelTransaction:
                                 dialogHelper.showVoidAnyDialog();
