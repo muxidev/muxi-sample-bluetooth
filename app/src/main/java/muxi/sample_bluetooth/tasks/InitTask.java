@@ -39,7 +39,7 @@ public class InitTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mpsManager.initialize(defaultPinpadmsg,cnpj);
+        mpsManager.initialize(defaultPinpadmsg,merchantId, BuildConfig.API_KEY);
         return null;
     }
 
