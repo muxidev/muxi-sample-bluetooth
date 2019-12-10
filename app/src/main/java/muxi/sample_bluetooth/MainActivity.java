@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final boolean DEFAULT_PP_MESSAGE = true;
-    private static final String DESENV_CNPJ = "9876";
+    private static final String DESENV_MERCHANT_ID= "9876";
 
     private int DEFAULT_POSITION = 4;
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private SharedPreferences.Editor editor;
     private BluetoothList bluetoothList;
 
-    private String cnpj = DESENV_CNPJ;
+    private String merchantId = DESENV_MERCHANT_ID;
 
     String clientReceipt = "";
     String establishmentReceipt = "";
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private void setup() {
         setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        cnpj = sharedPreferences.getString(getString(R.string.pref_cnpj_key),DESENV_CNPJ);
+        merchantId = sharedPreferences.getString(getString(R.string.pref_merchantId_key),DESENV_MERCHANT_ID);
         mBluetoothDevice = findViewById(R.id.spinner_pinpad_name);
         ButterKnife.bind(this);
         if (bluetoothList == null){
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
         setupNavMenu();
-        updateCnpj(cnpj);
+        updatemerchantId(merchantId);
     }
 
     @Override
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                         mDrawerLayout.closeDrawer(GravityCompat.START);
                         switch (item.getItemId()) {
                             case R.id.action_start:
-                                final InitTask taskInit = new InitTask(mProgressDialog,cnpj,
+                                final InitTask taskInit = new InitTask(mProgressDialog,merchantId,
                                         DEFAULT_PP_MESSAGE,mpsManager);
                                 taskInit.execute();
                                 return true;
@@ -205,12 +205,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                 });
     }
 
-    private void updateCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    private void updatemerchantId(String merchantId) {
+        this.merchantId = merchantId;
         View header = mNavigationView.getHeaderView(0);
-        TextView mCnpj= header.findViewById(R.id.tv_cnpjHeader);
-        String text = "CNPJ " + cnpj;
-        mCnpj.setText(text);
+        TextView mmerchantId= header.findViewById(R.id.tv_merchantIdHeader);
+        String text = "merchantId " + merchantId;
+        mmerchantId.setText(text);
 
     }
 
@@ -342,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
         transaction.setCv(cv);
         transaction.setAuth(aut);
         transaction.setRate(rate);
+        transaction.setMerchantId(merchantId);
 
         return transaction;
     }
@@ -491,8 +492,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
     @Override
     public void onClickEstablishment(String numberOfEstablishment) {
-        createToast(getResources().getString(R.string.changed_cnpj));
-        updateCnpj(numberOfEstablishment);
+        createToast(getResources().getString(R.string.changed_merchantId));
+        updatemerchantId(numberOfEstablishment);
     }
 
     @Override

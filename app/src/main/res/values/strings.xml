@@ -51,10 +51,10 @@
     <string name="selected_label">Selected</string>
     <string name="label_status">Status</string>
     <string name="voucher" translatable="false">VOUCHER</string>
-    <string name="navdrawer_setEstablishment">Set CNPJ</string>
+    <string name="navdrawer_setEstablishment">Set merchantId</string>
     <string name="modify">Modify</string>
-    <string name="changed_cnpj">CNPJ changed!</string>
-    <string name="type_cnpj">Type CNPJ</string>
+    <string name="changed_merchantId">merchantId changed!</string>
+    <string name="type_merchantId">Type merchantId</string>
     <string name="navdrawer_cancelTransaction">Cancel specific transaction</string>
     <string name="type_cv">Type CV</string>
     <string name="type_value">Type value</string>
@@ -77,5 +77,5 @@
     <integer name="max_length_input">13</integer>
     <bool name="checked_radio_button">true</bool>
     <string name="pref_key" translatable="false">preference</string>
-    <string name="pref_cnpj_key" translatable="false">cnpj</string>
+    <string name="pref_merchantId_key" translatable="false">merchantId</string>
 </resources>

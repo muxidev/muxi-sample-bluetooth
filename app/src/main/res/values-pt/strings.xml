@@ -47,8 +47,8 @@
     <string name="initialization_label">Inicializado</string>
     <string name="selected_label">Selecionado</string>
     <string name="label_status">Status</string>
-    <string name="navdrawer_setEstablishment">Alterar CNPJ</string>
-    <string name="type_cnpj">Digite o CNPJ</string>
+    <string name="navdrawer_setEstablishment">Alterar merchantId</string>
+    <string name="type_merchantId">Digite o merchantId</string>
     <string name="navdrawer_cancelTransaction">Cancelar transação específica</string>
     <string name="type_cv">Digite o CV</string>
     <string name="type_value">Digite o valor</string>
@@ -57,7 +57,7 @@
     <string name="back">Voltar</string>
     <string name="title_rate_dialog">Selecione os juros</string>
     <string name="title_installments_dialog">Selecione o número de parcelas</string>
-    <string name="changed_cnpj">CNPJ alterado!</string>
+    <string name="changed_merchantId">merchantId alterado!</string>
     <string name="empty_cv">CV não pode ser vazio</string>
     <string name="empty_aut">Código autorizador não pode ser vazio</string>
     <string name="dialog_see_client_receipt">Ver via do cliente</string>
