@@ -331,7 +331,7 @@ public class DialogHelper extends BaseDialog {
 
     public void showEstablishmentDialog(final SharedPreferences sharedPreferences){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(R.string.type_cnpj);
+        builder.setMessage(R.string.type_merchantId);
 
         final EditText input = new EditText(context);
         input.setLayoutParams(new LinearLayout.LayoutParams(
@@ -345,7 +345,7 @@ public class DialogHelper extends BaseDialog {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         editor = sharedPreferences.edit();
-                        editor.putString(context.getString(R.string.pref_cnpj_key),input.getText().toString());
+                        editor.putString(context.getString(R.string.pref_merchantId_key),input.getText().toString());
                         editor.apply();
                         dialogCallback.onClickEstablishment(input.getText().toString());
                     }

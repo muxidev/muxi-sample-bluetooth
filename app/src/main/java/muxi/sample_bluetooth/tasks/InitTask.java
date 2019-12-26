@@ -4,20 +4,22 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import muxi.payservices.sdk.service.IMPSManager;
+import muxi.sample_bluetooth.BuildConfig;
+
 public class InitTask extends AsyncTask<Void,Void,Void> {
 
     private ProgressDialog progressDialog;
-    private String cnpj;
+    private String merchantId;
     private boolean defaultPinpadmsg;
     private IMPSManager mpsManager;
 
 
     public InitTask(ProgressDialog progressDialog,
-                    String cnpj,
+                    String merchantId,
                     boolean defaultPinpadMsg,
                     IMPSManager mpsManager){
         this.progressDialog = progressDialog;
-        this.cnpj = cnpj;
+        this.merchantId = merchantId;
         this.defaultPinpadmsg = defaultPinpadMsg;
         this.mpsManager = mpsManager;
 
@@ -37,7 +39,7 @@ public class InitTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mpsManager.initialize(defaultPinpadmsg,cnpj);
+        mpsManager.initialize(defaultPinpadmsg,merchantId, BuildConfig.API_KEY);
         return null;
     }
 

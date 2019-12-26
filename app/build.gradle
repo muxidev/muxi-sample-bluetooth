@@ -19,8 +19,26 @@ android {
 
         }
     }
+
+
+    buildTypes.each {
+        def TYPE_STRING = "String"
+        def API_KEY = "API_KEY"
+        it.buildConfigField TYPE_STRING, API_KEY, "\""+getProps(API_KEY)+"\""
+    }
+
 }
 
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return ""
+    }
+}
 
 task checkstyle(type: Checkstyle){
     configFile = rootProject.file('checkstyle/muxi_checkstyle.xml')

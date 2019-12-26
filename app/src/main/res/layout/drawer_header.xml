@@ -24,7 +24,7 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/tv_cnpjHeader"
+            android:id="@+id/tv_merchantIdHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp" />
