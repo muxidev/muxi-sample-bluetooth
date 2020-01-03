@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_label_application_ver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/tv_application_ver_margin"
+        android:layout_marginRight="@dimen/tv_application_ver_margin"
+        android:layout_marginTop="@dimen/tv_application_ver_margin"
+        android:textAlignment="center"
+        android:text="@string/application_version"/>
+
+    <TextView
+        android:id="@+id/tv_application_ver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/tv_application_ver_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/tv_application_ver_text_size"/>
+
+    <TextView
+        android:id="@+id/tv_label_posweb_ver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/tv_posweb_ver_text_margin"
+        android:layout_marginRight="@dimen/tv_posweb_ver_text_margin"
+        android:layout_marginTop="@dimen/tv_posweb_ver_text_margin"
+        android:textAlignment="center"
+        android:text="@string/posweb_version"/>
+
+    <TextView
+        android:id="@+id/tv_posweb_ver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/tv_posweb_ver_text_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/tv_posweb_ver_text_size"/>
+
+</LinearLayout>

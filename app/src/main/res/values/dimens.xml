@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-
-
-
-
-
-
     <dimen name="text_dialog_margin_bottom">20dp</dimen>
     <dimen name="frag_padding_horizontal">24dp</dimen>
 
@@ -14,10 +7,8 @@
     <dimen name="bt_dialog_padding_bottom">8dp</dimen>
     <dimen name="button_bt_dialog_height">52dp</dimen>
 
-
     <dimen name="button_dialog_margin">8dp</dimen>
     <dimen name="button_dialog_padding">8dp</dimen>
-
 
     <dimen name="cv_bluetooth_margin_start">8dp</dimen>
     <dimen name="cv_bluetooth_margin_top">8dp</dimen>
@@ -113,4 +104,8 @@
     <dimen name="view_pared_header_margin_bottom">10dp</dimen>
     <dimen name="btn_reprint_margin_start">225dp</dimen>
     <dimen name="btn_reprint_margin_top">2dp</dimen>
+    <dimen name="tv_application_ver_text_size">24sp</dimen>
+    <dimen name="tv_application_ver_margin">30dp</dimen>
+    <dimen name="tv_posweb_ver_text_size">24sp</dimen>
+    <dimen name="tv_posweb_ver_text_margin">30dp</dimen>
 </resources>

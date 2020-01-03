@@ -11,6 +11,9 @@ public interface DialogCallback {
                     int installmentsNumber, boolean isAdmRate);
     void onClickEstablishment(String numberOfEstablishment);
     void onClickVoidAny(RadioGroup typePaymentChecked,String cv,String auth);
+    void onClickReprint(boolean isEstablishmentReceipt);
+
+    void onClickPrintCustomer();
 }
 
 

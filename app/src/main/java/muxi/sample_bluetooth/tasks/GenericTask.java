@@ -3,31 +3,28 @@ package muxi.sample_bluetooth.tasks;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
-import muxi.payservices.sdk.service.IMPSManager;
-import muxi.sample_bluetooth.BuildConfig;
+import java.util.List;
 
-public class InitTask extends AsyncTask<Void,Void,Void> {
+import muxi.payservices.sdk.service.IMPSManager;
+
+public class GenericTask extends AsyncTask<Void,Void,Void> {
 
     private ProgressDialog progressDialog;
-    private String merchantId;
-    private boolean defaultPinpadmsg;
     private IMPSManager mpsManager;
-    private String token;
     private String message;
+    private String command;
+    private List<String> params;
 
 
-    public InitTask(ProgressDialog progressDialog,
-                    String merchantId,
-                    boolean defaultPinpadMsg,
-                    IMPSManager mpsManager,
-                    String token,
-                    String message) {
+    public GenericTask(ProgressDialog progressDialog,
+                       String command,
+                       List<String> params,
+                       IMPSManager mpsManager,
+                       String message) {
         this.progressDialog = progressDialog;
-        this.merchantId = merchantId;
-        this.defaultPinpadmsg = defaultPinpadMsg;
         this.mpsManager = mpsManager;
-        this.token = token;
         this.message = message;
+        this.command = command;
     }
 
     @Override
@@ -42,14 +39,7 @@ public class InitTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        mpsManager.initialize(defaultPinpadmsg,merchantId,token);
+        mpsManager.genericCommand(command,params);
         return null;
     }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        progressDialog.dismiss();
-    }
-
 }

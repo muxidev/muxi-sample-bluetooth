@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,9 +33,9 @@ import muxi.payservices.sdk.data.MPSTransaction;
 
 public class DialogHelper extends BaseDialog {
 
-    public static final int ADMIN_RATE = 1;
+    private static final int ADMIN_RATE = 1;
 
-    public static final String TAG = DialogHelper.class.getSimpleName();
+    private static final String TAG = DialogHelper.class.getSimpleName();
     private Context context;
     private DialogCallback dialogCallback;
 
@@ -61,6 +62,27 @@ public class DialogHelper extends BaseDialog {
         super.showDialog(builder);
     }
 
+
+    public void showVersionsDialog(String applicationVersion, String poswebVersion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View view = factory.inflate(R.layout.dialog_versions,null);
+        builder.setView(view);
+
+        TextView tvApplicationVer = view.findViewById(R.id.tv_application_ver);
+        tvApplicationVer.setText(applicationVersion);
+
+        TextView tvPoswebVer = view.findViewById(R.id.tv_posweb_ver);
+        tvPoswebVer.setText(poswebVersion);
+
+        builder.setPositiveButton(android.R.string.ok, (dialogInterface, i) ->
+                dialogInterface.dismiss());
+
+        createDialog(builder);
+        showDialog(builder);
+    }
+
     public void showTransactionDialog(String textTitle, boolean status, final String clientReceipt,
                                       final String establishmentReceipt) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -84,24 +106,11 @@ public class DialogHelper extends BaseDialog {
             title.setTextSize(24);
             builder.setCustomTitle(title);
 
-            builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setNeutralButton(context.getResources().getString(R.string.client_receipt), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    showReceiptDialog(clientReceipt, establishmentReceipt, true);
-                }
-            });
-            builder.setNegativeButton(context.getResources().getString(R.string.establishment_receipt), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    showReceiptDialog(clientReceipt, establishmentReceipt, false);
-                }
-            });
+            builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), (dialog, which) -> dialog.dismiss());
+            builder.setNeutralButton(context.getResources().getString(R.string.client_receipt), (dialog, which) ->
+                    showReceiptDialog(clientReceipt, establishmentReceipt, true));
+            builder.setNegativeButton(context.getResources().getString(R.string.establishment_receipt), (dialog, which) ->
+                    showReceiptDialog(clientReceipt, establishmentReceipt, false));
         } else {
 
             ImageView imageView = new ImageView(context);
@@ -123,12 +132,7 @@ public class DialogHelper extends BaseDialog {
             title.setTextSize(24);
             builder.setCustomTitle(title);
 
-            builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), (dialog, which) -> dialog.dismiss());
         }
         createDialog(builder);
         showDialog(builder);
@@ -147,28 +151,20 @@ public class DialogHelper extends BaseDialog {
         final RadioGroup mTypeRadioGroupCancel = view.findViewById(R.id.radioGroupCancel);
         mTypeRadioGroupCancel.check(R.id.cancelRadioButton_credit);
         builder.setPositiveButton(R.string.dialog_ok,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String cv = etCv.getText().toString();
-                        String aut = etAut.getText().toString();
-                        if(cv.isEmpty()){
-                            Toast.makeText(context, context.getString(R.string.empty_cv), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if(aut.isEmpty()){
-                            Toast.makeText(context, context.getString(R.string.empty_aut), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        dialogCallback.onClickVoidAny(mTypeRadioGroupCancel,etCv.getText().toString(), etAut.getText().toString());
+                (dialogInterface, i) -> {
+                    String cv = etCv.getText().toString();
+                    String aut = etAut.getText().toString();
+                    if(cv.isEmpty()){
+                        Toast.makeText(context, context.getString(R.string.empty_cv), Toast.LENGTH_SHORT).show();
+                        return;
                     }
+                    if(aut.isEmpty()){
+                        Toast.makeText(context, context.getString(R.string.empty_aut), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    dialogCallback.onClickVoidAny(mTypeRadioGroupCancel,etCv.getText().toString(), etAut.getText().toString());
                 });
-        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
+        builder.setNegativeButton(R.string.back, (dialogInterface, i) -> dialogInterface.dismiss());
 
         createDialog(builder);
         showDialog(builder);
@@ -191,6 +187,8 @@ public class DialogHelper extends BaseDialog {
             title = context.getString(R.string.client_receipt);
             receipt = clientReceipt;
             anotherReceipt = context.getString(R.string.establishment_receipt);
+            //TODO adicionar um botao para imprimir
+            dialogCallback.onClickPrintCustomer();
         }
         builder.setTitle(title);
 
@@ -205,31 +203,20 @@ public class DialogHelper extends BaseDialog {
         scrollView.addView(layout);
         builder.setView(scrollView);
 
-        builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), (dialog, whichButton) -> dialog.dismiss());
 
-        builder.setNeutralButton(anotherReceipt, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showReceiptDialog(clientReceipt,establishmentReceipt,!isClientReceipt);
-            }
-        });
-        builder.setNegativeButton(context.getResources().getString(R.string.send_email), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType(context.getResources().getString(R.string.email_type));
-                i.putExtra(Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.client_receipt));
-                i.putExtra(Intent.EXTRA_TEXT   , establishmentReceipt);
-                try {
-                    context.startActivity(Intent.createChooser(i, context.getResources().getString(R.string.send_email)));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Log.e(TAG,"There are no email clients installed.");
-                }
+        builder.setNeutralButton(anotherReceipt, (dialog, which) ->
+                showReceiptDialog(clientReceipt,establishmentReceipt,!isClientReceipt));
+        builder.setNegativeButton(context.getResources().getString(R.string.send_email), (dialog, which) -> {
+            dialog.dismiss();
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType(context.getResources().getString(R.string.email_type));
+            i.putExtra(Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.client_receipt));
+            i.putExtra(Intent.EXTRA_TEXT   , establishmentReceipt);
+            try {
+                context.startActivity(Intent.createChooser(i, context.getResources().getString(R.string.send_email)));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Log.e(TAG,"There are no email clients installed.");
             }
         });
 
@@ -237,6 +224,32 @@ public class DialogHelper extends BaseDialog {
         showDialog(builder);
     }
 
+    public void showReprintDialog(){
+        final int[] indexChecked = {-1};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(context.getResources().getString(R.string.title_reprint_dialog));
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View view = factory.inflate(R.layout.dialog_rate,null);
+        builder.setView(view);
+        final RadioGroup mTypeRadioGroupCancel = view.findViewById(R.id.radioGroupRate);
+        RadioButton rbCustomer = view.findViewById(R.id.radioButton_loja);
+        RadioButton rbEstab = view.findViewById(R.id.radioButton_adm);
+        rbCustomer.setText("Cliente");
+        rbEstab.setText("Estabelecimento");
+        mTypeRadioGroupCancel.check(R.id.radioButton_loja);
+        builder.setPositiveButton(context.getResources().getString(R.string.text_positive_button),
+                (dialogInterface, i) -> {
+                    int radioButtonID = mTypeRadioGroupCancel.getCheckedRadioButtonId();
+                    View radioButton = mTypeRadioGroupCancel.findViewById(radioButtonID);
+                    indexChecked[0] = mTypeRadioGroupCancel.indexOfChild(radioButton);
+                    boolean isEstablishment = indexChecked[0] != 0;
+                    dialogCallback.onClickReprint(isEstablishment);
+                });
+        builder.setCancelable(true);
+        createDialog(builder);
+        showDialog(builder);
+
+    }
     public void showRateDialog(final MPSTransaction.TransactionMode transactionMode, final int installmentsNumber) {
         final int[] indexChecked = {-1};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -249,17 +262,14 @@ public class DialogHelper extends BaseDialog {
         mTypeRadioGroupCancel.check(R.id.radioButton_loja);
 
         builder.setPositiveButton(context.getResources().getString(R.string.text_positive_button),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int radioButtonID = mTypeRadioGroupCancel.getCheckedRadioButtonId();
-                        View radioButton = mTypeRadioGroupCancel.findViewById(radioButtonID);
-                        indexChecked[0] = mTypeRadioGroupCancel.indexOfChild(radioButton);
-                        boolean rate = false;
-                        if(indexChecked[0] == ADMIN_RATE)
-                            rate = true;
-                        dialogCallback.onClickPay(transactionMode,installmentsNumber, rate);
-                    }
+                (dialogInterface, i) -> {
+                    int radioButtonID = mTypeRadioGroupCancel.getCheckedRadioButtonId();
+                    View radioButton = mTypeRadioGroupCancel.findViewById(radioButtonID);
+                    indexChecked[0] = mTypeRadioGroupCancel.indexOfChild(radioButton);
+                    boolean rate = false;
+                    if(indexChecked[0] == ADMIN_RATE)
+                        rate = true;
+                    dialogCallback.onClickPay(transactionMode,installmentsNumber, rate);
                 });
         builder.setCancelable(true);
         createDialog(builder);
@@ -279,19 +289,16 @@ public class DialogHelper extends BaseDialog {
         rg.check(R.id.rb_vista);
         builder.setCancelable(true);
         builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok),
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int radioButtonID = rg.getCheckedRadioButtonId();
-                View radioButton = rg.findViewById(radioButtonID);
-                int indexChecked = rg.indexOfChild(radioButton);
-                if(indexChecked == VISTA){
-                    dialogCallback.onClickPay(transactionMode,DEFAULT_INSTALMENTS,DEFAULT_RATE_ADMIN);
-                }else{
-                    showInstallmentsDialog(transactionMode);
-                }
-            }
-        });
+                (dialog, which) -> {
+                    int radioButtonID = rg.getCheckedRadioButtonId();
+                    View radioButton = rg.findViewById(radioButtonID);
+                    int indexChecked = rg.indexOfChild(radioButton);
+                    if(indexChecked == VISTA){
+                        dialogCallback.onClickPay(transactionMode,DEFAULT_INSTALMENTS,DEFAULT_RATE_ADMIN);
+                    }else{
+                        showInstallmentsDialog(transactionMode);
+                    }
+                });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
@@ -308,30 +315,24 @@ public class DialogHelper extends BaseDialog {
         builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok),null);
         final AlertDialog alertDialog = builder.create();
 
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button buttonPositive = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
-                buttonPositive.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int install = Integer.valueOf(installments.getText().toString());
-                        if(install < MINIMUM_INSTALLMENTS){
-                            installments.setError("Choose at least 2 installments");
-                        }else{
-                            showRateDialog(transactionMode,install);
-                            alertDialog.dismiss();
-                        }
-                    }
-                });
-            }
+        alertDialog.setOnShowListener(dialog -> {
+            Button buttonPositive = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
+            buttonPositive.setOnClickListener(v -> {
+                int install = Integer.valueOf(installments.getText().toString());
+                if(install < MINIMUM_INSTALLMENTS){
+                    installments.setError("Choose at least 2 installments");
+                }else{
+                    showRateDialog(transactionMode,install);
+                    alertDialog.dismiss();
+                }
+            });
         });
         alertDialog.show();
     }
 
     public void showEstablishmentDialog(final SharedPreferences sharedPreferences){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(R.string.type_merchantId);
+        builder.setMessage(R.string.type_merchant_id);
 
         final EditText input = new EditText(context);
         input.setLayoutParams(new LinearLayout.LayoutParams(
@@ -341,22 +342,13 @@ public class DialogHelper extends BaseDialog {
         input.setRawInputType(Configuration.KEYBOARD_12KEY);
         builder.setView(input);
         builder.setPositiveButton(R.string.modify,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        editor = sharedPreferences.edit();
-                        editor.putString(context.getString(R.string.pref_merchantId_key),input.getText().toString());
-                        editor.apply();
-                        dialogCallback.onClickEstablishment(input.getText().toString());
-                    }
+                (dialogInterface, i) -> {
+                    editor = sharedPreferences.edit();
+                    editor.putString(context.getString(R.string.pref_merchant_id_key),input.getText().toString());
+                    editor.apply();
+                    dialogCallback.onClickEstablishment(input.getText().toString());
                 });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
 
         createDialog(builder);
         showDialog(builder);

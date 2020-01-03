@@ -17,6 +17,7 @@
     <string name="btn_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="navdrawer_start">Start</string>
     <string name="navdrawer_deconfigure">Deconfigure</string>
+    <string name="navdrawer_version">Versions</string>
 
     <string name="btn_pay_text">CHARGE</string>
     <string name="tv_last_transaction_font">sans-serif-medium</string>
@@ -26,6 +27,8 @@
     <string name="tv_last_transaction">LAST TRANSACTION</string>
     <string name="tv_no_last_transaction">NO LAST TRANSACTION</string>
 
+    <string name="application_version">Application (TEF) version</string>
+    <string name="posweb_version">POSWEB version</string>
 
     <string name="payment_approved">Payment approved</string>
 
@@ -41,7 +44,7 @@
     <string name="cancel_approved">Cancel approved</string>
     <string name="cancel_error">Cancel error</string>
     <string name="cancel_void">No last transaction</string>
-    <string name="loading_initialize">Loading…</string>
+    <string name="loading">Loading…</string>
     <string name="waiting_pinpad">Waiting pinpad…</string>
     <string name="client_receipt">Client receipt</string>
     <string name="dialog_ok">OK</string>
@@ -51,10 +54,10 @@
     <string name="selected_label">Selected</string>
     <string name="label_status">Status</string>
     <string name="voucher" translatable="false">VOUCHER</string>
-    <string name="navdrawer_setEstablishment">Set merchantId</string>
+    <string name="navdrawer_setEstablishment">Set merchantID</string>
     <string name="modify">Modify</string>
-    <string name="changed_merchantId">merchantId changed!</string>
-    <string name="type_merchantId">Type merchantId</string>
+    <string name="changed_merchant_id">Merchant id changed!</string>
+    <string name="type_merchant_id">Type merchant id</string>
     <string name="navdrawer_cancelTransaction">Cancel specific transaction</string>
     <string name="type_cv">Type CV</string>
     <string name="type_value">Type value</string>
@@ -74,8 +77,8 @@
     <string name="installment">Installment payment</string>
     <string name="btn_reprint">Reprint</string>
     <string name="empty_receipt">There\'s no receipt to show</string>
+    <string name="title_reprint_dialog">Choose type to reprint</string>
+    <string name="navdrawer_stopService">Stop Service</string>
     <integer name="max_length_input">13</integer>
     <bool name="checked_radio_button">true</bool>
-    <string name="pref_key" translatable="false">preference</string>
-    <string name="pref_merchantId_key" translatable="false">merchantId</string>
 </resources>

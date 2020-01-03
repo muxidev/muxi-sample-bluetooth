@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -38,11 +37,13 @@ import static muxi.sample_bluetooth.AppConstants.RADIO_GROUP_DEBIT;
 import static muxi.sample_bluetooth.AppConstants.RADIO_GROUP_VOUCHER;
 import muxi.payservices.sdk.data.MPSTransaction;
 import muxi.payservices.sdk.data.MPSResult;
+import muxi.payservices.sdk.data.ReceiptType;
 import muxi.payservices.sdk.service.IMPSManager;
 import muxi.sample_bluetooth.dialogs.DialogCallback;
 import muxi.sample_bluetooth.dialogs.DialogHelper;
 import muxi.payservices.sdk.service.CallbackAnswer;
 import muxi.payservices.sdk.service.MPSManager;
+import muxi.sample_bluetooth.tasks.GenericTask;
 import muxi.sample_bluetooth.tasks.InitTask;
 import muxi.sample_bluetooth.tasks.TransactionTask;
 import muxi.sample_bluetooth.utils.FormatUtils;
@@ -85,14 +86,27 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private ImageView mImageInitStatus;
 
     private IMPSManager mpsManager;
-    private MPSResult resultTransact = new MPSResult();
+    private MPSResult resultOfCall = new MPSResult();
 
     private static String mCurrentSelectedDevice;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private BluetoothList bluetoothList;
 
-    private String merchantId = DESENV_MERCHANT_ID;
+    private boolean isBounded = false;
+
+    enum COMMAND {
+        INIT,
+        TRANSACT,
+        CANCEL,
+        GENERIC,
+        DECONFIGURE,
+        IDLE
+    }
+
+    COMMAND currentCommand = COMMAND.IDLE;
+
+    String merchantId = DESENV_MERCHANT_ID;
 
     String clientReceipt = "";
     String establishmentReceipt = "";
@@ -117,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     private void setup() {
         setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        merchantId = sharedPreferences.getString(getString(R.string.pref_merchantId_key),DESENV_MERCHANT_ID);
+        merchantId = sharedPreferences.getString(getString(R.string.pref_merchant_id_key),DESENV_MERCHANT_ID);
         mBluetoothDevice = findViewById(R.id.spinner_pinpad_name);
         ButterKnife.bind(this);
         if (bluetoothList == null){
@@ -149,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
         setupNavMenu();
-        updatemerchantId(merchantId);
+        updateMerchantId(merchantId);
     }
 
     @Override
@@ -185,18 +199,37 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                         mDrawerLayout.closeDrawer(GravityCompat.START);
                         switch (item.getItemId()) {
                             case R.id.action_start:
-                                final InitTask taskInit = new InitTask(mProgressDialog,merchantId,
-                                        DEFAULT_PP_MESSAGE,mpsManager);
-                                taskInit.execute();
+                                if(!isBounded){
+                                    currentCommand = COMMAND.INIT;
+                                    isBounded = mpsManager.bindService(getApplicationContext());
+
+                                }else{
+                                    callInit();
+                                }
                                 return true;
                             case R.id.action_deconfigure:
-                                mpsManager.deconfigure(true);
+                                if(!isBounded){
+                                    currentCommand = COMMAND.DECONFIGURE;
+                                    isBounded = mpsManager.bindService(getApplicationContext());
+                                }else{
+                                    mpsManager.deconfigure(true);
+                                }
                                 return true;
                             case R.id.action_establishment:
                                 dialogHelper.showEstablishmentDialog(sharedPreferences);
                                 return true;
                             case R.id.action_cancelTransaction:
                                 dialogHelper.showVoidAnyDialog();
+                                return true;
+                            case R.id.action_getVersion:
+                                if(!isBounded){
+                                    currentCommand = COMMAND.GENERIC;
+                                    isBounded = mpsManager.bindService(getApplicationContext());
+                                }else{
+                                    callGeneric();
+                                }
+                            case R.id.action_stopService:
+                                mpsManager.stopService();
                                 return true;
                             default:
                                 return false;
@@ -205,12 +238,33 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                 });
     }
 
-    private void updatemerchantId(String merchantId) {
+    private void callGeneric() {
+        final GenericTask taskVersions =
+                new GenericTask(mProgressDialog,
+                        AppConstants.GET_VERSIONS_CMD,
+                        null,
+                        mpsManager,
+                        getResources().getString(R.string.loading));
+        taskVersions.execute();
+    }
+
+    private void callInit() {
+        final InitTask taskInit =
+                new InitTask(mProgressDialog,
+                        merchantId,
+                        DEFAULT_PP_MESSAGE,
+                        mpsManager,
+                        BuildConfig.API_KEY,
+                        getResources().getString(R.string.loading));
+        taskInit.execute();
+    }
+
+    private void updateMerchantId(String merchantId) {
         this.merchantId = merchantId;
         View header = mNavigationView.getHeaderView(0);
-        TextView mmerchantId= header.findViewById(R.id.tv_merchantIdHeader);
-        String text = "merchantId " + merchantId;
-        mmerchantId.setText(text);
+        TextView mMerchantId= header.findViewById(R.id.tv_merchantIdHeader);
+        String text = "MerchantId " + merchantId;
+        mMerchantId.setText(text);
 
     }
 
@@ -243,18 +297,21 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
 
 
+    MPSTransaction currentMpsTransaction = null;
     @OnClick(R.id.btn_cancel)
     public void onBtnCancel()
     {
-        if(!currentValue.equals("")) {
-            MPSTransaction mpsTransaction = createTransaction(currentValue,typePayment,"","", defaultInstalments,rate);
-            TransactionTask taskInitCancel = new TransactionTask(mProgressDialog,mpsManager,mpsTransaction, AppConstants.TransactionState.cancel);
-            taskInitCancel.execute();
-        }
-        else {
-            createToast(getResources().getString(R.string.cancel_void));
-        }
+        //TODO add a protection for sending null in transactionMode for cancel last transaction.
+        //Actually this field is ignored, but still necessary to avoid crash
+        currentMpsTransaction = createTransaction("", MPSTransaction.TransactionMode.CREDIT,"","", 0,false);
 
+        if(isBounded){
+            callTransact(currentMpsTransaction, AppConstants.TransactionState.cancel);
+
+        }else{
+            isBounded = mpsManager.bindService(this);
+            currentCommand = COMMAND.CANCEL;
+        }
     }
 
     @OnClick(R.id.btn_reprint)
@@ -262,13 +319,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
         if(clientReceipt.equals("")){
             Toast.makeText(this, getResources().getString(R.string.empty_receipt), Toast.LENGTH_SHORT).show();
         }else {
-            dialogHelper.showReceiptDialog(clientReceipt, establishmentReceipt, true);
+            dialogHelper.showReprintDialog();
         }
     }
+    MPSTransaction.TransactionMode transactionMode;
 
     @OnClick(R.id.btn_pay)
     public void onBtnPay(){
-        MPSTransaction.TransactionMode transactionMode;
         if (DEFAULT_USE_PP) {
             transactionMode = getSelectedType(mTypeRadioGroup);
         }
@@ -276,7 +333,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             dialogHelper.showTransactionTypeDialog(transactionMode);
         }
         else{
-            makePayment(transactionMode,defaultInstalments);
+            if(isBounded){
+                makePayment(transactionMode,defaultInstalments);
+            }else{
+                isBounded = mpsManager.bindService(this);
+                currentCommand = COMMAND.TRANSACT;
+            }
         }
     }
 
@@ -356,8 +418,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             bluetoothList.setMpsManager(mpsManager);
         }
 
-        boolean bindService = mpsManager.bindService(getApplicationContext());
-        Log.d(TAG, "bindService result =" + bindService);
+        //TODO: Actually this can be done here because we never use stopService. If we did, we won't
+        //be able to do anything without check service is bound or minimize and resume app.
+        isBounded = mpsManager.bindService(getApplicationContext());
+        Log.d(TAG, "bindService result =" + isBounded);
         mpsManager.setMpsManagerCallback(new CallbackAnswer(){
             @Override
             public void onInitAnswer(final MPSResult mpsResult) {
@@ -379,19 +443,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
             @Override
             public void onTransactionAnswer(final MPSResult mpsResult) {
-                resultTransact = mpsResult;
+                resultOfCall = mpsResult;
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mProgressDialog.dismiss();
                         mTextValue.setSelection(DEFAULT_POSITION);
-                        if(resultTransact != null){
-                            if (resultTransact.getStatus() == MPSResult.Status.SUCCESS){
-                                Log.d(TAG,"MAIN RECEIPT " + resultTransact.getClientReceipt());
+                        if(resultOfCall != null){
+                            if (resultOfCall.getStatus() == MPSResult.Status.SUCCESS){
+                                Log.d(TAG,"MAIN RECEIPT " + resultOfCall.getClientReceipt());
                                 dialogHelper.showTransactionDialog(getResources().getString(R.string.payment_approved),
-                                        true, resultTransact.getClientReceipt(),
-                                        resultTransact.getEstablishmentReceipt());
+                                        true, resultOfCall.getClientReceipt(),
+                                        resultOfCall.getEstablishmentReceipt());
                                 String date = FormatUtils.getCurrentDate();
                                 String time = FormatUtils.getCurrentTime(false);
                                 String dateTime = date+" "+time;
@@ -400,16 +464,16 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                                 setLastTransactionData(getResources().getString(R.string.tv_last_transaction),typePayment.name(),
                                         valueLastTransaction,
                                         dateTime,
-                                        getResources().getString(R.string.value_default), resultTransact.getClientReceipt(),
-                                        resultTransact.getEstablishmentReceipt());
+                                        getResources().getString(R.string.value_default), resultOfCall.getClientReceipt(),
+                                        resultOfCall.getEstablishmentReceipt());
                             }else{
-                                Log.d(TAG,"onError " + mpsResult.getDescriptionError());
-                                String descriptionError = mpsResult.getDescriptionError();
+                                Log.d(TAG,"onError " + resultOfCall.getDescriptionError());
+                                String descriptionError = resultOfCall.getDescriptionError();
                                 dialogHelper.showTransactionDialog(descriptionError, false,descriptionError,"");
                             }
                         }else{
                             createToast(getString(R.string.generic_error));
-                            Log.d(TAG,"Result transaction null");
+                            Log.d(TAG,"Result of call null");
                         }
                     }
                 });
@@ -418,28 +482,28 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
             @Override
             public void onCancelAnswer(MPSResult mpsResult) {
-                resultTransact = mpsResult;
+                resultOfCall = mpsResult;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mProgressDialog.dismiss();
-                        if (resultTransact != null) {
-                            if (resultTransact.getStatus() == MPSResult.Status.SUCCESS) {
-                                Log.d(TAG, "MAIN RECEIPT " + resultTransact.getClientReceipt());
+                        if (resultOfCall != null) {
+                            if (resultOfCall.getStatus() == MPSResult.Status.SUCCESS) {
+                                Log.d(TAG, "MAIN RECEIPT " + resultOfCall.getClientReceipt());
                                 dialogHelper.showTransactionDialog(getResources().getString(R.string.cancel_approved), true,
-                                        resultTransact.getClientReceipt(), resultTransact.getEstablishmentReceipt());
+                                        resultOfCall.getClientReceipt(), resultOfCall.getEstablishmentReceipt());
                                 setLastTransactionData(getResources().getString(R.string.tv_no_last_transaction), "",
                                         "",
                                         "",
-                                        getResources().getString(R.string.value_default), resultTransact.getClientReceipt(), resultTransact.getEstablishmentReceipt());
+                                        getResources().getString(R.string.value_default), resultOfCall.getClientReceipt(), resultOfCall.getEstablishmentReceipt());
                             } else {
-                                String descriptionError = resultTransact.getDescriptionError();
+                                String descriptionError = resultOfCall.getDescriptionError();
                                 Log.d(TAG, "onError " + descriptionError);
                                 dialogHelper.showTransactionDialog(descriptionError, false, descriptionError, "");
                             }
                         }else{
                             createToast(getResources().getString(R.string.generic_error));
-                            Log.d(TAG,"Result transaction null");
+                            Log.d(TAG,"Result of call null");
                         }
                     }
                 });
@@ -463,9 +527,65 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
             }
 
             @Override
+            public void onGenericCommand(MPSResult mpsResult) {
+                resultOfCall = mpsResult;
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mProgressDialog.dismiss();
+                        if(resultOfCall != null) {
+                            if (resultOfCall.getStatus() == MPSResult.Status.SUCCESS){
+                                String applicationVersion = resultOfCall.getApplicationVersion();
+                                String poswebVersion = resultOfCall.getPoswebVersion();
+                                dialogHelper.showVersionsDialog(applicationVersion, poswebVersion);
+                            } else {
+                                String descriptionError = resultOfCall.getDescriptionError();
+                                Log.d(TAG, "onError " + descriptionError);
+                                createToast(descriptionError);
+                            }
+                        } else {
+                            createToast(getString(R.string.generic_error));
+                            Log.d(TAG,"Result of call null");
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onPrintAnswer(MPSResult mpsResult) {
+                super.onPrintAnswer(mpsResult);
+            }
+
+
+            @Override
             public void onServiceDisconnected(ComponentName componentName) {
                 Log.d(TAG,"onServiceDisconnected sample");
                 createToast(getResources().getString(R.string.service_not_initialized));
+                isBounded = false;
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName componentName) {
+                super.onServiceConnected(componentName);
+                isBounded = true;
+                switch (currentCommand){
+                    case INIT:
+                        callInit();
+                        break;
+                    case DECONFIGURE:
+                        mpsManager.deconfigure(true);
+                        break;
+                    case GENERIC:
+                        callGeneric();
+                        break;
+                    case TRANSACT:
+                        makePayment(transactionMode,defaultInstalments);
+                        break;
+                    case CANCEL:
+                        callTransact(currentMpsTransaction, AppConstants.TransactionState.cancel);
+                        break;
+                }
             }
         });
         bluetoothList.updateItemsOnSpinner(adapter);
@@ -478,6 +598,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     }
 
     @Override
+    protected void onStop() {
+        mpsManager.stopService();
+        super.onStop();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -487,13 +613,20 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     @Override
     public void onClickPay(MPSTransaction.TransactionMode transactionMode, int installmentsNumber, boolean isAdmRate) {
         this.rate = isAdmRate;
-        makePayment(transactionMode,installmentsNumber);
+        this.transactionMode = transactionMode;
+        this.defaultInstalments = installmentsNumber;
+        if(isBounded){
+            makePayment(transactionMode,installmentsNumber);
+        }else{
+            currentCommand = COMMAND.TRANSACT;
+            isBounded = mpsManager.bindService(this);
+        }
     }
 
     @Override
     public void onClickEstablishment(String numberOfEstablishment) {
-        createToast(getResources().getString(R.string.changed_merchantId));
-        updatemerchantId(numberOfEstablishment);
+        createToast(getResources().getString(R.string.changed_merchant_id));
+        updateMerchantId(numberOfEstablishment);
     }
 
     @Override
@@ -501,11 +634,31 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
         MPSTransaction.TransactionMode transactionMode;
         transactionMode = getSelectedType(typePaymentChecked);
         Log.d(TAG,"Transaction type for cancel "+ transactionMode.name());
-        MPSTransaction mpsTransaction = createTransaction("", transactionMode,
+        currentMpsTransaction = createTransaction("", transactionMode,
                 cv, auth, defaultInstalments,rate);
 
-        TransactionTask taskInitCancel = new TransactionTask(mProgressDialog,
-                mpsManager,mpsTransaction, AppConstants.TransactionState.cancel);
-        taskInitCancel.execute();
+        if(isBounded){
+            callTransact(currentMpsTransaction, AppConstants.TransactionState.cancel);
+        }else{
+            isBounded = mpsManager.bindService(this);
+            currentCommand = COMMAND.CANCEL;
+        }
+    }
+
+    private void callTransact(MPSTransaction currentMpsTransaction, AppConstants.TransactionState type) {
+        TransactionTask transactionTask = new TransactionTask(mProgressDialog,
+                mpsManager, currentMpsTransaction, type);
+        transactionTask.execute();
+    }
+
+    @Override
+    public void onClickReprint(boolean isEstablishmentReceipt) {
+        ReceiptType receiptType = isEstablishmentReceipt ? ReceiptType.ESTABLISHMENT:ReceiptType.CUSTOMER;
+        mpsManager.reprintLastTransaction(receiptType);
+    }
+
+    @Override
+    public void onClickPrintCustomer() {
+        mpsManager.printCustomerReceipt();
     }
 }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/groupStart">
-    <item android:id="@+id/action_start"
-        android:icon="@drawable/ic_start"
-        android:title="@string/navdrawer_start"
-        >
-    </item>
-    </group>
-    <group android:id="@+id/groupDeconfigure">
 
+    <group android:id="@+id/groupStart">
+        <item android:id="@+id/action_start"
+            android:icon="@drawable/ic_start"
+            android:title="@string/navdrawer_start">
+        </item>
+    </group>
+
+    <group android:id="@+id/groupDeconfigure">
         <item android:id="@+id/action_deconfigure"
             android:icon="@drawable/ic_deconfigure"
             android:title="@string/navdrawer_deconfigure">
@@ -17,17 +17,31 @@
     </group>
 
     <group android:id="@+id/groupSetEstablishment">
-            <item android:id="@+id/action_establishment"
+        <item android:id="@+id/action_establishment"
             android:icon="@drawable/ic_payment_ok"
             android:title="@string/navdrawer_setEstablishment">
         </item>
     </group>
 
     <group android:id="@+id/groupCancelTransaction">
-
         <item android:id="@+id/action_cancelTransaction"
             android:icon="@drawable/ic_payment_ok"
             android:title="@string/navdrawer_cancelTransaction">
         </item>
     </group>
+
+    <group android:id="@+id/groupGetVersion">
+        <item android:id="@+id/action_getVersion"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/navdrawer_version">
+        </item>
+    </group>
+
+    <group android:id="@+id/groupStopService">
+        <item android:id="@+id/action_stopService"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="@string/navdrawer_stopService">
+        </item>
+    </group>
+
 </menu>

@@ -77,7 +77,7 @@ public class BluetoothList {
             }else{
                 listPairedNames.add(btData[0]);
             }
-                listPairedAddress.add(btData[1]);
+            listPairedAddress.add(btData[1]);
 
 
             listPairedNames.addAll(getPairedName());
@@ -197,8 +197,8 @@ public class BluetoothList {
 
     }
     public void setWhenDeconfigure(){
-       mCurrentSelectedName = " ";
-       mCurrentSelectedDevice = " ";
+        mCurrentSelectedName = " ";
+        mCurrentSelectedDevice = " ";
     }
 
     public ArrayList<String> getPairedName(){

@@ -16,6 +16,7 @@
     <string name="btn_cancel" tools:ignore="ButtonCase">CANCELAR</string>
     <string name="navdrawer_start">Inicializar</string>
     <string name="navdrawer_deconfigure">Desconfigurar</string>
+    <string name="navdrawer_version">Versões</string>
 
     <string name="btn_pay_text">PAGAR</string>
     <string name="tv_last_transaction_font">sans-serif-medium</string>
@@ -24,6 +25,9 @@
     <string name="btn_cancel_font">sans-serif-medium</string>
     <string name="tv_last_transaction">ULTIMA TRANSAÇÃO</string>
     <string name="tv_no_last_transaction">SEM ULTIMA TRANSAÇÃO</string>
+
+    <string name="application_version">Versão da Aplicação (TEF)</string>
+    <string name="posweb_version">Versão do POSWEB</string>
 
     <string name="payment_approved">Pagamento aprovado</string>
 
@@ -38,7 +42,7 @@
     <string name="cancel_approved">Cancelamento aprovado</string>
     <string name="cancel_error">Erro ao cancelar</string>
     <string name="cancel_void">Sem ultima transação</string>
-    <string name="loading_initialize">Carregando…</string>
+    <string name="loading">Carregando…</string>
     <string name="waiting_pinpad">Esperando pinpad…</string>
     <string name="client_receipt">Via do cliente</string>
     <string name="dialog_ok">OK</string>
@@ -48,7 +52,7 @@
     <string name="selected_label">Selecionado</string>
     <string name="label_status">Status</string>
     <string name="navdrawer_setEstablishment">Alterar merchantId</string>
-    <string name="type_merchantId">Digite o merchantId</string>
+    <string name="type_merchant_id">Digite o merchantID</string>
     <string name="navdrawer_cancelTransaction">Cancelar transação específica</string>
     <string name="type_cv">Digite o CV</string>
     <string name="type_value">Digite o valor</string>
@@ -57,7 +61,7 @@
     <string name="back">Voltar</string>
     <string name="title_rate_dialog">Selecione os juros</string>
     <string name="title_installments_dialog">Selecione o número de parcelas</string>
-    <string name="changed_merchantId">merchantId alterado!</string>
+    <string name="changed_merchant_id">Merchant id alterado!</string>
     <string name="empty_cv">CV não pode ser vazio</string>
     <string name="empty_aut">Código autorizador não pode ser vazio</string>
     <string name="dialog_see_client_receipt">Ver via do cliente</string>
@@ -68,5 +72,7 @@
     <string name="installment">Parcelado</string>
     <string name="btn_reprint">Reimprimir</string>
     <string name="empty_receipt">Não há recibo para ser exibido</string>
+    <string name="title_reprint_dialog">Escolha a via que deseja reimprimir</string>
+    <string name="navdrawer_stopService">Parar serviço</string>
 
 </resources>

@@ -21,4 +21,6 @@ package muxi.sample_bluetooth;
     int RECEIPT_MARGIN_TOP = 15;
     int RECEIPT_MARGIN_RIGHT = 0;
     int RECEIPT_MARGIN_BOTTOM = 0;
+
+    String GET_VERSIONS_CMD = "vers";
 }
