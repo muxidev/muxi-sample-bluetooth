@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
                                     callGeneric();
                                 }
                             case R.id.action_stopService:
-                                mpsManager.stopService();
+                                mpsManager.stopService(getApplicationContext());
                                 return true;
                             default:
                                 return false;
@@ -559,15 +559,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
 
             @Override
-            public void onServiceDisconnected(ComponentName componentName) {
+            public void onServiceDisconnected() {
                 Log.d(TAG,"onServiceDisconnected sample");
                 createToast(getResources().getString(R.string.service_not_initialized));
                 isBounded = false;
             }
 
             @Override
-            public void onServiceConnected(ComponentName componentName) {
-                super.onServiceConnected(componentName);
+            public void onServiceConnected() {
+                super.onServiceConnected();
                 isBounded = true;
                 switch (currentCommand){
                     case INIT:
@@ -593,14 +593,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
 
     @Override
     protected void onDestroy() {
-        mpsManager.unbindService(this);
+        mpsManager.stopService(getApplicationContext());
         super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        mpsManager.stopService();
-        super.onStop();
     }
 
     @Override
