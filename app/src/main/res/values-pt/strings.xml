@@ -74,5 +74,6 @@
     <string name="empty_receipt">Não há recibo para ser exibido</string>
     <string name="title_reprint_dialog">Escolha a via que deseja reimprimir</string>
     <string name="navdrawer_stopService">Parar serviço</string>
+    <string name="empty_amount">Valor não pode ser vazio</string>
 
 </resources>

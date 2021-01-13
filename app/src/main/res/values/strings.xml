@@ -79,6 +79,7 @@
     <string name="empty_receipt">There\'s no receipt to show</string>
     <string name="title_reprint_dialog">Choose type to reprint</string>
     <string name="navdrawer_stopService">Stop Service</string>
+    <string name="empty_amount">Amount cannot be zero</string>
     <integer name="max_length_input">13</integer>
     <bool name="checked_radio_button">true</bool>
 </resources>

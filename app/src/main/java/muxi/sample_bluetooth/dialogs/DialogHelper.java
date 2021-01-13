@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import muxi.payservices.sdk.service.Constants;
 import muxi.sample_bluetooth.AppConstants;
+import muxi.sample_bluetooth.MaskWatcher;
 import muxi.sample_bluetooth.R;
 import muxi.payservices.sdk.data.MPSTransaction;
 
@@ -148,12 +149,17 @@ public class DialogHelper extends BaseDialog {
 
         final EditText etCv =  view.findViewById(R.id.et_cv);
         final EditText etAut =  view.findViewById(R.id.et_aut);
+        final EditText etValue = view.findViewById(R.id.et_value);
+        etValue.addTextChangedListener(MaskWatcher.mask(etValue));
         final RadioGroup mTypeRadioGroupCancel = view.findViewById(R.id.radioGroupCancel);
         mTypeRadioGroupCancel.check(R.id.cancelRadioButton_credit);
         builder.setPositiveButton(R.string.dialog_ok,
                 (dialogInterface, i) -> {
                     String cv = etCv.getText().toString();
                     String aut = etAut.getText().toString();
+                    String amount = etValue.getText().toString()
+                            .replace("R$","")
+                            .replace(".","");
                     if(cv.isEmpty()){
                         Toast.makeText(context, context.getString(R.string.empty_cv), Toast.LENGTH_SHORT).show();
                         return;
@@ -162,7 +168,11 @@ public class DialogHelper extends BaseDialog {
                         Toast.makeText(context, context.getString(R.string.empty_aut), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    dialogCallback.onClickVoidAny(mTypeRadioGroupCancel,etCv.getText().toString(), etAut.getText().toString());
+                    if(amount.equals("000")) {
+                        Toast.makeText(context, context.getString(R.string.empty_amount), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    dialogCallback.onClickVoidAny(mTypeRadioGroupCancel,etCv.getText().toString(), etAut.getText().toString(), amount);
                 });
         builder.setNegativeButton(R.string.back, (dialogInterface, i) -> dialogInterface.dismiss());
 
