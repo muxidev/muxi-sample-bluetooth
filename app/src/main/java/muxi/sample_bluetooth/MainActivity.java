@@ -303,7 +303,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     {
         //TODO add a protection for sending null in transactionMode for cancel last transaction.
         //Actually this field is ignored, but still necessary to avoid crash
-        currentMpsTransaction = createTransaction("", MPSTransaction.TransactionMode.CREDIT,"","", 0,false);
+        String cleanedAmount = mValueLastTransaction.getText().toString()
+                .replace("R$","")
+                .replace(".","");
+        currentMpsTransaction = createTransaction(cleanedAmount, MPSTransaction.TransactionMode.CREDIT,"","", 0,false);
 
         if(isBounded){
             callTransact(currentMpsTransaction, AppConstants.TransactionState.cancel);
@@ -624,11 +627,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothList.BtC
     }
 
     @Override
-    public void onClickVoidAny(RadioGroup typePaymentChecked, String cv, String auth) {
+    public void onClickVoidAny(RadioGroup typePaymentChecked, String cv, String auth, String amount) {
         MPSTransaction.TransactionMode transactionMode;
         transactionMode = getSelectedType(typePaymentChecked);
         Log.d(TAG,"Transaction type for cancel "+ transactionMode.name());
-        currentMpsTransaction = createTransaction("", transactionMode,
+        currentMpsTransaction = createTransaction(amount, transactionMode,
                 cv, auth, defaultInstalments,rate);
 
         if(isBounded){

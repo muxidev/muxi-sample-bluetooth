@@ -27,6 +27,17 @@
         android:inputType="number"
         android:textAlignment="center"/>
 
+    <EditText
+        android:id="@+id/et_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp"
+        android:maxLength="@integer/max_length_input"
+        android:text="@string/value_default"
+        android:inputType="number"
+        android:textAlignment="center"/>
+
     <RadioGroup
         android:id="@+id/radioGroupCancel"
         android:layout_width="@dimen/radiogroup_width"
